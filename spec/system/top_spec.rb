@@ -33,7 +33,7 @@ describe 'トップページのテスト' do
         click_button 'Log in'
         visit root_path
 
-        click_link 'Sign Up'
+        click_link 'Sign up'
         expect(page).to have_content 'User info'
       end
     end
