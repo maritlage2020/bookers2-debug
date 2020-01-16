@@ -23,10 +23,29 @@
 					</td>
 					<td><%= link_to @book.title, @book %></td>
 					<td><%= @book.body %></td>
-					<% if @book.user == current_user %>
-						<td><%= link_to "Edit",edit_book_path(@book), class: "btn-sm btn-success edit_book_#{@book.id}" %></td>
-						<td><%= link_to "Destroy",@book, method: :delete, data: {confirm: "本当に削除してもよろしいですか？"}, class: "btn-sm btn-danger destroy_book_#{@book.id}" %></td>
-					<% end %>
+<!-- ふぁぼ -->
+                <% if @book.favorited_by?(current_user) %>
+                  <th>
+                    <%= link_to book_favorite_path(@book), method: :delete do %>
+                      <i><span class="glyphicon glyphicon-heart" aria-hidden="true"></span></i>
+                      <%= @book.favorites.count %> いいね</th>
+                    <% end %>
+                <% else %>
+                  <th>
+                    <%= link_to book_favorites_path(@book), method: :post do %>
+                      <i><span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span></i>
+                      <%= @book.favorites.count %> いいね</th>
+                    <% end %>
+                <% end %>
+<!-- ここまで -->
+                    <% if @book.user == current_user %>
+                      <td>
+                         <button type="button" class="btn btn-info"><%= link_to "edit",edit_book_path, class: "edit_book_#{@book.id}" %></button>
+                      </td>
+                      <td>
+                       <button type="button" class="btn btn-danger"><%= link_to "Destroy",book_path,method: :delete, class: "destroy_book_#{@book.id}" %></button>
+                      </td>
+                     <% end %>
 				</tr>
 			</table>
 
